@@ -1,3 +1,5 @@
+from cffi.ffiplatform import LIST_OF_FILE_NAMES
+
 print("Hi Selenium \n"
       "Let's start RPA test")
 
@@ -26,16 +28,16 @@ driver.get(url)                                                               # 
 myID = "kslee"
 myPW = "@Lks622103"
 
-userID = driver.find_element("xpath",'//*[@id="username"]')       # userID 변수 만들기
-userID.click()                                                    # 아이디 창 클릭
-userID.send_keys(myID)                                            # 아이디 입력키 보내기 ("본인 아이디")
+userID = driver.find_element("xpath",'//*[@id="username"]')          # userID 변수 만들기
+userID.click()                                                                # 아이디 창 클릭
+userID.send_keys(myID)                                                        # 아이디 입력키 보내기 ("본인 아이디")
 
-userPW = driver.find_element("xpath",'//*[@id="password"]')       # 비밀번호 태그를 userPW 라는 변수에 넣기
-userPW.click()                                                    # 비밀번호 창 클릭
-userPW.send_keys(myPW)                                            # 비밀번호 입력키 보내기 ("본인 비번")
+userPW = driver.find_element("xpath",'//*[@id="password"]')          # 비밀번호 태그를 userPW 라는 변수에 넣기
+userPW.click()                                                                 # 비밀번호 창 클릭
+userPW.send_keys(myPW)                                                         # 비밀번호 입력키 보내기 ("본인 비번")
 
 login_btn = driver.find_element("xpath",'//*[@id="login_submit"]')      # 로그인 버튼을 login_btn 변수에 넣기
-login_btn.click()
+login_btn.click()                                                                   # 로그인 버튼 클릭
 print("로그인 완료")
 
 mail_menu = driver.find_element(By.XPATH,'//*[@id="menu-container"]/ul/div[1]/div[2]/div/div/div/li[2]/a/span[1]/span')
@@ -43,7 +45,7 @@ mail_menu.click()
 time.sleep(2)
 print("메일 메뉴 진입")
 
-iframe = driver.find_element(By.XPATH,'//*[@id="mail-viewer"]')
+iframe = driver.find_element(By.XPATH,'//*[@id="mail-viewer"]')             # ist iframe 진입 mail-viewer
 driver.switch_to.frame(iframe)
 print("iframe 진입")
 mail_write = driver.find_element(By.XPATH,'//*[@id="mailLeftMenuWrap"]/section[2]/a')
@@ -51,14 +53,16 @@ mail_write.click()
 time.sleep(2)
 print("iframe 진입 후, 메일쓰기 버튼 클릭")
 
-# 메일정보 입력
+# ================================================== 메일정보 입력 =======================================================
 receive_mail_address = "haggis@daou.co.kr"                        # 받는사람 메일주소 입력
 cc_mail_address = "soominoh95@daou.co.kr"                         # cc메일주소 입력
-title_input = "자동화테스트 메일 입니다 by 이기성"                     # 제목 입력 내용
-mail_contents = ("안녕하세요\n"
+title_input = "자동화테스트 메일 입니다 by 이기성"                     # 제목 입력
+mail_contents = ("안녕하세요\n"                                     # 메일내용 입력
                  "품질관리팀의 이기성입니다.\n"
                  "자동화테스트 실습 메일보내기를 하고 있습니다.\n"
                  "감사합니다.\n")
+file_paths = r"D:\attachment_RPA.jpg"
+#======================================================================================================================
 
 receiver = driver.find_element(By.XPATH,'//*[@id="to"]')                       #받는사람
 time.sleep(1)
@@ -79,11 +83,11 @@ title.click()
 title.send_keys(title_input)
 print("메일제목 입력완료")
 
-iframe_editor = driver.find_element(By.XPATH,'//*[@id="dext_frame_smartEditor"]')
+iframe_editor = driver.find_element(By.XPATH,'//*[@id="dext_frame_smartEditor"]')   # 2nd iframe 진입 dext_frame_smartEditor
 driver.switch_to.frame(iframe_editor)
 print("2nd iframe access")
 
-iframe_contents = driver.find_element(By.XPATH,'//*[@id="dext5_design_smartEditor"]')
+iframe_contents = driver.find_element(By.XPATH,'//*[@id="dext5_design_smartEditor"]')     # 3rd iframe 진입 dext5_design_smartEditor
 driver.switch_to.frame(iframe_contents)
 print("3rd iframe access")
 text_body = driver.find_element(By.XPATH,'//*[@id="dext_body"]')
@@ -91,7 +95,23 @@ text_body.click()
 text_body.send_keys(mail_contents)
 print("메일 내용 입력완료")
 
-driver.switch_to.parent_frame()
-print("텍스트박스 iframe 에서 빠져나옴")
+driver.switch_to.parent_frame()                                                                 #3rd iframe 바깥으로 빠져나옴
+print("3rd iframe 에서 빠져나옴")
 
-driver.switch_to.default_content()                                # 1st iframe 바깥으로 빠져나옴                                              # 로그인 버튼 클릭
+driver.switch_to.parent_frame()                                                                 #2nd iframe 바까틍로 빠져나옴
+print("2nd iframe에서 빠져나옴")
+
+file_up = driver.find_element(By.XPATH,'//*[@id="mailSimpleUpload"]')                     # 파일 불러오기
+file_up.send_keys(file_paths)
+print("파일 불러오기 완료")
+
+send_btn = driver.find_element(By.XPATH,'//*[@id="write_toolbar_wrap"]/div[1]/a[1]')      # 보내기 버튼 불러오기
+send_btn.click()                                                                                # 보내기 클릭
+print("메일 보내기 버튼 클릭")
+
+alert_confirm = driver.find_element(By.XPATH,'//*[@id="gpopupLayer"]/footer/a[1]')        # 알럿의 "확인" 불러오기
+alert_confirm.click()                                                                           # 알럿의 "확인" 클릭하기
+print("팝업에서 확인")
+driver.switch_to.default_content()                                                              # 1st iframe 바깥으로 빠져나옴
+print("메일 보내기 완료")
+driver.quit()
