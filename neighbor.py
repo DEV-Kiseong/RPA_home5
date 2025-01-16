@@ -80,24 +80,28 @@ class neighbor():
                 }
         user_id = "lksday62"
         user_pw = "@navks9562"
-        for login_key, login_value in login_info.items():
-            if login_key == "id":
-                path = driver.find_element(By.XPATH, login_value)
-                actions.move_to_element(path).click().perform()
-                actions.send_keys(user_id).perform()
-                time.sleep(1)
-                sup.logger.info(f'{login_key}입력 PASS')
-            elif login_key == "password" :
-                path = driver.find_element(By.XPATH, login_value)
-                actions.move_to_element(path).click().perform()
-                actions.send_keys(user_pw).perform()
-                sup.logger.info(f'{login_key} 입력 PASS')
-            elif login_key == "login":
-                path = driver.find_element(By.XPATH, login_value)
-                actions.move_to_element(path).click().perform()
-                time.sleep(1)
-                sup.logger.info("로그인 버튼 클릭 PASS")
-        sup.logger.info("로그인 완료 PASS")
+        try:
+            for login_key, login_value in login_info.items():
+                if login_key == "id":
+                    path = driver.find_element(By.XPATH, login_value)
+                    actions.move_to_element(path).click().perform()
+                    actions.send_keys(user_id).perform()
+                    time.sleep(1)
+                    sup.logger.info(f'{login_key}입력 PASS')
+                elif login_key == "password" :
+                    path = driver.find_element(By.XPATH, login_value)
+                    actions.move_to_element(path).click().perform()
+                    actions.send_keys(user_pw).perform()
+                    sup.logger.info(f'{login_key} 입력 PASS')
+                elif login_key == "login":
+                    path = driver.find_element(By.XPATH, login_value)
+                    actions.move_to_element(path).click().perform()
+                    time.sleep(1)
+                    sup.logger.info("로그인 버튼 클릭 PASS")
+            sup.logger.info("로그인 완료 PASS")
+        except:
+            sup.logger.error("!!!!! 네이버 로그인 실패 ERROR")
+
 
 # =================== 클래스 및 함수 ==========================
 sup = setting_up()
