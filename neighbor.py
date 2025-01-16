@@ -11,12 +11,11 @@ import time
 import logging
 chrome_options=Options()
 chrome_service=Service()
-chrome_options.add_experimental_option("detach", True)                        # 브라우저 꺼짐 방지 옵션(driver위에 위치해야 한다.)
-chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"]) # 불필요한 에러 메세지 없애기
+chrome_options.add_experimental_option("detach", True)                              # 브라우저 꺼짐 방지 옵션(driver위에 위치해야 한다.)
+chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])       # 불필요한 에러 메세지 없애기
 chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])    # 자동화 메시지 끄기
 
-driver = webdriver.Chrome(service=chrome_service,options=chrome_options)      # 크롬 드라이버 실행(설치불필요 ver.4 이상)
-                                                             # 네이버 접속
+driver = webdriver.Chrome(service=chrome_service,options=chrome_options)                        # 크롬 드라이버 실행(설치불필요 ver.4 이상)
 
 # 세팅 클래스
 class setting_up():
@@ -41,13 +40,13 @@ class setting_up():
         formatter = logging.Formatter("[%(asctime)s] %(levelname)s %(name)s " + self.user_id + "[%(thread)d] [%(funcName)s : line %(lineno)d] - %(message)s")
         # 콘솔 출력
         stream_handler = logging.StreamHandler()
-        stream_handler.setLevel(logging.DEBUG)  # 콘솔에만 DEBUG 이상 로그 표시
+        stream_handler.setLevel(logging.DEBUG)                   # 콘솔에만 DEBUG 이상 로그 표시
         stream_handler.setFormatter(formatter)
 
         # 파일에 출력
         self.logfile = r'D:\파이썬\RPA_home\log\log' + datetime.today().strftime("%Y%m%d_%H%M%S") + '.log'  # 로그파일 주소
         file_handler = logging.FileHandler(self.logfile, 'w', encoding="UTF-8")
-        file_handler.setLevel(logging.INFO)  # 파일에만  INFO 이상 로그 표시
+        file_handler.setLevel(logging.INFO)                     # 파일에만  INFO 이상 로그 표시
         file_handler.setFormatter(formatter)
 
         # 중복 핸들러 추가 방지
@@ -61,9 +60,9 @@ class setting_up():
 class neighbor():
     # 로그인 함수
     def login(self):
-        driver.implicitly_wait(30)  # 웹페이지 로딩 될때까지 5초 wait
-        driver.maximize_window()  # 화면 최대화
-        url = "https://www.naver.com/"
+        driver.implicitly_wait(30)                                              # 웹페이지 로딩 될때까지 5초 wait
+        driver.maximize_window()                                                # 화면 최대화
+        url = "https://www.naver.com/"                                          # 네이버 접속
         driver.get(url)
 
         login_button_xpath = '//*[@id="account"]//*[contains(@class,MyView-module__link_login___HpHMW)]'
